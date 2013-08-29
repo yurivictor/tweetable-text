@@ -1,5 +1,5 @@
 .tweetable a { background: whitesmoke; position:relative; padding: 5px; text-decoration: none; }
-    .tweetable a:hover { color: #ed2e24; text-decoration: none; }
-    .tweetable a:hover .share { display: block; }
-    .tweetable .icon-twitter { color: #ed2e24; }
-    .tweetable .share { background: #ed2e24; border-radius: 4px; color: #fff; display: none; position:absolute; padding: 5px; left: 0; top: -35px; width: 45px; }
+.tweetable a:hover { color: #ed2e24; text-decoration: none; }
+.tweetable a:hover .share { display: block; }
+.tweetable .icon-twitter { color: #ed2e24; }
+.tweetable .share { background: #ed2e24; border-radius: 4px; color: #fff; display: none; position:absolute; padding: 5px; left: 0; top: -35px; width: 45px; }
