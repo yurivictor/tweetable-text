@@ -16,6 +16,17 @@ class TweetableText {
 	const version          = '0.0.1';
 	const key              = 'tweetable';
 
+	/** Variables *************************************************************/
+
+	protected $data = array(
+		'color_bg'    => 'Background color',
+		'color_text'  => 'Text color',
+		'color_hover' => 'Text hover color',
+		'username'    => 'Default Twitter username',
+		'bitly user'  => 'Bitly username',
+		'bitly pass'  => 'Bitly password',
+	);
+
 	/** Load Methods **********************************************************/
 
 	/**
@@ -32,7 +43,9 @@ class TweetableText {
 	 * @uses add_action()
 	 */
 	private static function add_actions() {
-		add_action(  'wp_head', array( __CLASS__, 'enqueue_scripts' ) );
+		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );
+		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_menu', array( __CLASS__, 'add_pages') );
 	}
 
 	/**
@@ -53,12 +66,28 @@ class TweetableText {
 	}
 
 	/**
+	 * Hook into WordPress settings API
+	 * @uses register_setting()
+	 */
+	public static function register_settings() {
+    	register_setting( 'tweetable_options', self::key, array( __CLASS__, 'settings' ) );
+	}
+
+	/**
 	 * Enqueue the necessary CSS and JS
 	 * @uses wp_enqueue_style()
 	 */
 	public static function enqueue_scripts() {
 		// css
 		wp_enqueue_style( self::key, plugins_url( 'css/tweetable.css', __FILE__ ), null, self::version );
+	}
+
+	/**
+	 * Adds Tweetable to settings
+	 * @uses add_option_page()
+	 */
+	public function add_pages() {
+	    add_options_page( 'Tweetable', 'Tweetable', 'manage_options', 'tweetable_options', array( __CLASS__, 'options_page' ) );
 	}
 
 	/** Public Methods *****************************************************/
@@ -93,19 +122,50 @@ class TweetableText {
 
 		// for INN's Largo sites only we'll use the site's twitter handle if no manual override is provided
 		// @todo add ability to set a default from a plugin settings page
-		if ( !$via && of_get_option('twitter_link') && function_exists('twitter_url_to_username') )
-			$via = twitter_url_to_username( of_get_option('twitter_link') );
+		if ( ! $via && get_option( 'twitter_link' ) && function_exists( 'twitter_url_to_username' ) )
+			$via = twitter_url_to_username( get_option( 'twitter_link' ) );
 
 		if ( $alt ) $tweetcontent = $alt;
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
+		
+		$options = get_option( 'tweetable' );
+		
 
 		ob_start();
-			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
+			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via', 'options' ) );
 			$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
 	}
 
+	/**
+	 * Create html for options page
+	 * @uses get_option
+	 * @return html of options page
+	 */
+	public function options_page() {
+    	$key     = self::key;
+    	$options = get_option( $key );
+
+		return self::template( 'options', compact( 'key', 'options' ) );
+
+	}
+
+	/**
+	 * Sanitize user settings submission
+	 * @return array $valid, the sanitized input
+	 */
+	public static function settings( $input ) {
+
+		$valid = array();
+		$valid['color_bg']    = sanitize_text_field( $input['color_bg'] );
+		$valid['color_text']   = sanitize_text_field( $input['color_text'] );
+		$valid['color_hover']  = sanitize_text_field( $input['color_hover'] );
+		$valid['username']   = sanitize_text_field( $input['username'] );
+
+		return $valid;
+	}
+	
 	/**
 	 * Load a template. MVC FTW!
 	 * @param string $template the template to load, without extension (assumes .php). File should be in templates/ folder
