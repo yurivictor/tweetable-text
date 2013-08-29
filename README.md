@@ -33,3 +33,4 @@ As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">F
 * Move admin-only settings into separate class
 * Need to add hack to stop no tables error when plugin is activated 
 * Submit pull request to jbenton
+* Need to add font-awesome to the plugin
