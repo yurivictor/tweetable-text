@@ -27,7 +27,7 @@ class TweetableText {
 		self::remove_filters();
 	}
 
-	/** 
+	/**
 	 * Hook actions into WordPress API
 	 * @uses add_action()
 	 */
@@ -50,7 +50,7 @@ class TweetableText {
 	private static function remove_filters() {
 		// Stops WordPress from converting your quote symbols into smartquotes, since they are not compatible with the Twitter Share button. (The urlencoding of single quotes / apostrophes breaks in the tweet.)
 		remove_filter( 'the_content', 'wptexturize' );
-	}   
+	}
 
 	/**
 	 * Enqueue the necessary CSS and JS
@@ -83,23 +83,28 @@ class TweetableText {
 		// @param string alt, an alternate tweet
 		// @param string hashtag, a hashtag to attach to the tweet
 		extract( shortcode_atts( array(
-			'alt'     => '',
-			'hashtag' => '',
+			'alt'     	=> '',
+			'hashtag' 	=> '',
+			'via'		=> '',
 		), $atts ) );
 		$permalink = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
-			
+
+		//for Largo sites only we'll use the site's twitter handle if no manual override is provided
+		if ( !$via && of_get_option('twitter_link') && function_exists('twitter_url_to_username') )
+			$via = twitter_url_to_username( of_get_option('twitter_link') );
+
 		if ( $alt ) $tweetcontent = $alt;
-		if ( $hashtag ) $tweetcontent .= " " . $hashtag;
+		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
 
 		ob_start();
-			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink' ) );
+			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
 			$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
 	}
 
-	/** 
+	/**
 	 * Load a template. MVC FTW!
 	 * @param string $template the template to load, without extension (assumes .php). File should be in templates/ folder
 	 * @param args array of args to be run through extract and passed to template
