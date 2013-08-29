@@ -20,12 +20,12 @@ class TweetableText {
 	/** Variables *************************************************************/
 
 	protected $data = array(
-		'color_bg'    => 'Background color',
-		'color_text'  => 'Text color',
-		'color_hover' => 'Text hover color',
-		'username'    => 'Default Twitter username',
-		'bitly user'  => 'Bitly username',
-		'bitly pass'  => 'Bitly password',
+		'color_bg'    => '',
+		'color_text'  => '',
+		'color_hover' => '',
+		'username'    => '',
+		'bitly user'  => '',
+		'bitly pass'  => '',
 	);
 
 	/** Load Methods **********************************************************/
@@ -80,6 +80,7 @@ class TweetableText {
 	 */
 	public static function enqueue_scripts() {
 		// css
+		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
 		wp_enqueue_style( self::key, plugins_url( 'css/tweetable.css', __FILE__ ), null, self::version );
 	}
 
