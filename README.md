@@ -31,4 +31,5 @@ As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">F
 * Hook up color settings to CSS
 * Add bitly shortening for links
 * Move admin-only settings into separate class
+* Need to add hack to stop no tables error when plugin is activated 
 * Submit pull request to jbenton
