@@ -1,0 +1,3 @@
+.tweetable a { background: whitesmoke; padding: 5px; text-decoration: none; }
+    .tweetable a:hover { color: #ed2e24; text-decoration: none; }
+    .tweetable .icon-twitter { color: #ed2e24; }
