@@ -30,5 +30,5 @@ As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">F
 * Need better labeling on settings page
 * Hook up color settings to CSS
 * Add bitly shortening for links
-* Seperate admin-only settings into separate class
+* Move admin-only settings into separate class
 * Submit pull request to jbenton
