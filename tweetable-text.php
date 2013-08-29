@@ -82,6 +82,7 @@ class TweetableText {
 		// [tweetable] shortcode attributes
 		// @param string alt, an alternate tweet
 		// @param string hashtag, a hashtag to attach to the tweet
+		// @via string a twitter username to use as the via attribute (no @ sign)
 		extract( shortcode_atts( array(
 			'alt'     	=> '',
 			'hashtag' 	=> '',
@@ -90,7 +91,8 @@ class TweetableText {
 		$permalink = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
 
-		//for Largo sites only we'll use the site's twitter handle if no manual override is provided
+		// for INN's Largo sites only we'll use the site's twitter handle if no manual override is provided
+		// @todo add ability to set a default from a plugin settings page
 		if ( !$via && of_get_option('twitter_link') && function_exists('twitter_url_to_username') )
 			$via = twitter_url_to_username( of_get_option('twitter_link') );
 

@@ -1,31 +1,5 @@
-.tweetable a {
-  background-color: whitesmoke;
-  position: relative;
-  padding: 5px;
-  text-decoration: none;
- }
-.tweetable a:hover {
-  color: #0094c5;
-  text-decoration: none;
-}
-.tweetable a:hover .share {
-  display: block;
-}
-.tweetable .icon-twitter {
-  color: #0094c5;
-}
-.tweetable .share {
-  font-family: "helvetica neue", helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1;
-  background: #0094c5;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  color: #fff;
-  display: none;
-  position: absolute;
-  padding: 8px;
-  left: 0;
-  top: -35px;
-}
+.tweetable a { background: whitesmoke; position:relative; padding: 5px; text-decoration: none; }
+.tweetable a:hover { color: #ed2e24; text-decoration: none; }
+.tweetable a:hover .share { display: block; }
+.tweetable .icon-twitter { color: #ed2e24; }
+.tweetable .share { background: #ed2e24; border-radius: 4px; color: #fff; display: none; position:absolute; padding: 5px; left: 0; top: -35px; width: 45px; }
