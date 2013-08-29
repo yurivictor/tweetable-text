@@ -117,20 +117,17 @@ class TweetableText {
 			'hashtag' 	=> '',
 			'via'		=> '',
 		), $atts ) );
+		$options = get_option( 'tweetable' );
 		$permalink = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
 
-		// for INN's Largo sites only we'll use the site's twitter handle if no manual override is provided
-		// @todo add ability to set a default from a plugin settings page
-		if ( ! $via && get_option( 'twitter_link' ) && function_exists( 'twitter_url_to_username' ) )
-			$via = twitter_url_to_username( get_option( 'twitter_link' ) );
-
-		if ( $alt ) $tweetcontent = $alt;
+		if ( $alt ) $tweetcontent      = $alt;
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
+		if ( $via ) 
+			$tweetcontent     .= ' via @' . $via;
+		elseif ( $options['username'] == '' ) 
+			$tweetcontent .= ' via @' . $via;
 		
-		$options = get_option( 'tweetable' );
-		
-
 		ob_start();
 			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via', 'options' ) );
 			$output = ob_get_contents();
