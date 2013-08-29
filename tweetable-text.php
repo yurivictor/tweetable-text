@@ -117,19 +117,18 @@ class TweetableText {
 			'hashtag' 	=> '',
 			'via'		=> '',
 		), $atts ) );
-		$options = get_option( 'tweetable' );
-		$permalink = get_permalink( $post->ID );
+		$options      = get_option( 'tweetable' );
+		$permalink    = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
+		
+		if ( ! $via ) $via = $options['username'];
 
 		if ( $alt ) $tweetcontent      = $alt;
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
-		if ( $via ) 
-			$tweetcontent     .= ' via @' . $via;
-		elseif ( $options['username'] == '' ) 
-			$tweetcontent .= ' via @' . $via;
+		if ( $via ) $tweetcontent     .= ' via @' . $via;
 		
 		ob_start();
-			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via', 'options' ) );
+			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
 			$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
