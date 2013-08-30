@@ -22,9 +22,9 @@ class TweetableText {
 	/** Variables *************************************************************/
 
 	protected $data = array(
-		'color_bg'    => '',
-		'color_text'  => '',
-		'color_hover' => '',
+		'color_bg'    => 'whitesmoke',
+		'color_text'  => '#222',
+		'color_hover' => '#ed2e24',
 		'username'    => '',
 		'bitly_user'  => '',
 		'bitly_key'   => '',
