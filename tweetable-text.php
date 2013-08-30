@@ -239,21 +239,22 @@ class TweetableText {
 
 	/**
 	 * Helper function to read the contents of the bit.ly API response
+	 * @param string $url, the bitly API url
+	 * @return string the shortened url
 	 */
 	public static function urlopen( $url ) {
-		if (function_exists('curl_init')) {
+		if ( function_exists( 'curl_init' ) ) {		
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_HEADER, false);
-			$result = curl_exec($ch);
-			curl_close($ch);
+			curl_setopt( $ch, CURLOPT_URL, $url );
+			curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+			curl_setopt( $ch, CURLOPT_HEADER, false );
+			$result = curl_exec( $ch );
+			curl_close( $ch );
 			return $result;
 		} else {
-			return file_get_contents($url);
+			return file_get_contents( $url );
 		}
 	}
-
 }
 
 TweetableText::load();
