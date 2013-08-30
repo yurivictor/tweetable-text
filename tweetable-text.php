@@ -7,6 +7,8 @@ Version: 1.1
 Author: Salim Virani (original), updated by Joshua Benton of Nieman Lab, Yuri Victor, Adam Schweigert
 */
 
+define( 'TWEETABLETEXT_FILE', __FILE__ );
+
 if ( ! class_exists ( 'TweetableText' ) ):
 
 class TweetableText {
@@ -29,6 +31,34 @@ class TweetableText {
 	);
 
 	/** Load Methods **********************************************************/
+
+	/**
+	 * Register with WordPress API on Construct
+	 */
+	function __construct() {
+
+		//don't let this fire twice
+		if ( get_class( self ) == 'TweetableText' )
+			return;
+
+		register_activation_hook( TWEETABLETEXT_FILE, array( __CLASS__, 'activate' ) );
+	}
+
+	/**
+	 * Adds tables to WordPress
+	 * @uses update_option()
+	 */
+	public function activate() {
+		update_option( self::key, self::data);
+	}
+
+	/**
+	 * Removes tables from WordPress
+	 * @uses update_option()
+	 */
+	public function deactivate() {
+		update_option( self::key, self::data );
+	}
 
 	/**
 	 * Load necessary functions
