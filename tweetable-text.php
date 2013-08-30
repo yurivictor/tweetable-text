@@ -35,6 +35,7 @@ class TweetableText {
 	 */
 	public static function load() {
 		self::add_actions();
+		self::add_filters();
 		self::add_shortcodes();
 		self::remove_filters();
 	}
@@ -48,6 +49,13 @@ class TweetableText {
 		add_action( 'admin_menu', array( __CLASS__, 'add_pages') );
 		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );		
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
+	}
+	/**
+	 * Hook filters into WordPress API
+	 * @uses add_filter()
+	 */
+	private static function add_filters() {
+		add_filter( 'wp_head', array( __CLASS__, 'create_css' ) );
 	}
 
 	/**
@@ -82,7 +90,6 @@ class TweetableText {
 	public static function enqueue_scripts() {
 		// css
 		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
-		wp_enqueue_style( self::key, plugins_url( 'css/tweetable.css', __FILE__ ), null, self::version );
 	}
 
 	/**
@@ -134,11 +141,10 @@ class TweetableText {
 		$permalink    = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
 
-		if ( ! $via ) $via = $options['username'];
-
-		if ( $alt ) $tweetcontent      = $alt;
+		if ( ! $via )   $via             = $options['username'];
+		if ( $alt )     $tweetcontent      = $alt;
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
-		if ( $via ) $tweetcontent     .= ' via @' . $via;
+
 		
 		ob_start();
 			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
@@ -158,6 +164,21 @@ class TweetableText {
 
 		return self::template( 'options', compact( 'key', 'options' ) );
 
+	}
+
+	/**
+	 * Create CSS for tweetable 
+	 * @uses get_option
+	 * @return css
+	 */
+	public static function create_css() {
+		$options      = get_option( 'tweetable' );
+
+		$color_bg     = $options['color_bg'];
+		$color_text   = $options['color_text'];
+		$color_hover  = $options['color_hover'];
+
+		return self::template( 'css', compact( 'color_bg', 'color_text', 'color_hover' ) );
 	}
 
 	/**
