@@ -6,7 +6,7 @@
             <tr valign="top">
                 <th scope="row"><label name="<?php echo $key; ?>[color_bg]">Background color:</label></th>
                 <td>
-                    <input class="color-bg" data-default-color="whitesmoke" name="<?php echo $key; ?>[color_bg]" type="text" value="<?php echo $options['color_bg']; ?>">
+                    <input class="color-bg" data-default-color="#F5F5F5" name="<?php echo $key; ?>[color_bg]" type="text" value="<?php echo $options['color_bg']; ?>">
                 </td>
             </tr>
             <tr valign="top">

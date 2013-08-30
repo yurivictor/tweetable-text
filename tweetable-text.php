@@ -22,7 +22,7 @@ class TweetableText {
 	/** Variables *************************************************************/
 
 	protected $data = array(
-		'color_bg'    => 'whitesmoke',
+		'color_bg'    => '#F5F5F5',
 		'color_text'  => '#222',
 		'color_hover' => '#ed2e24',
 		'username'    => '',
@@ -271,7 +271,7 @@ class TweetableText {
 	 * @return string the shortened url
 	 */
 	public static function urlopen( $url ) {
-		if ( function_exists( 'curl_init' ) ) {		
+		if ( function_exists( 'curl_init' ) ) {
 			$ch = curl_init();
 			curl_setopt( $ch, CURLOPT_URL, $url );
 			curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
