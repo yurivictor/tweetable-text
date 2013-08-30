@@ -222,12 +222,11 @@ class TweetableText {
 	 * @return array $valid, the sanitized input
 	 */
 	public static function settings( $input ) {
-
 		$valid = array();
-		$valid['color_bg']    = sanitize_text_field( $input['color_bg'] );
+		$valid['color_bg']     = sanitize_text_field( $input['color_bg'] );
 		$valid['color_text']   = sanitize_text_field( $input['color_text'] );
 		$valid['color_hover']  = sanitize_text_field( $input['color_hover'] );
-		$valid['username']   = sanitize_text_field( $input['username'] );
+		$valid['username']     = sanitize_text_field( $input['username'] );
 
 		// @todo check to make sure the bitly username and api key are valid
 		$valid['bitly_user']   = sanitize_text_field( $input['bitly_user'] );
