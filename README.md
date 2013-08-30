@@ -25,10 +25,8 @@ As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">F
 
 ## TODO ##
 * Check user capabilities for settings
-* Change color settings to use iris picker
 * Add javascripty live preview to settings page
 * Need better labeling on settings page
-* Hook up color settings to CSS
 * Add bitly shortening for links
 * Move admin-only settings into separate class
 * Need to add hack to stop no tables error when plugin is activated 
