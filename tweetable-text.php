@@ -142,8 +142,18 @@ class TweetableText {
 		$tweetcontent = ucfirst( strip_tags( $content ) );
 
 
-		if ( !$via && $options['username'] )
-			$via = $options['username'];
+		if ( !$via ) {
+
+			// try the username from the setting panel
+			if ( $options['username'] ) {
+				$via = $options['username'];
+
+			// if that's not set try to largo theme options username
+			} else if ( of_get_option('twitter_link') && function_exists('twitter_url_to_username') ) {
+				$via = twitter_url_to_username( of_get_option('twitter_link') );
+			}
+
+		}
 
 		if ( $alt )     $tweetcontent  = $alt;
 
@@ -243,7 +253,7 @@ class TweetableText {
 	 * @return string the shortened url
 	 */
 	public static function urlopen( $url ) {
-		if ( function_exists( 'curl_init' ) ) {		
+		if ( function_exists( 'curl_init' ) ) {
 			$ch = curl_init();
 			curl_setopt( $ch, CURLOPT_URL, $url );
 			curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
