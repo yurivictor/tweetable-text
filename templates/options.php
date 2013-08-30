@@ -10,7 +10,7 @@
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><label name="<?php echo $key; ?>[color_text]">Text color:</label></th>
+                <th scope="row"><label name="<?php echo $key; ?>[color_text]">Link text color:</label></th>
                 <td>
                     <input class="color-text" data-default-color="#ed2e24" name="<?php echo $key; ?>[color_text]" type="text" value="<?php echo $options['color_text']; ?>">
                 </td>
