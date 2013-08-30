@@ -1,3 +1,3 @@
 jQuery( document ).ready( function( $ ) {
-    $( '.color-bg, .color-text, .color-hover' ).wpColorPicker();
+    $( '.color-bg, .color-text, .color-hover, .color-icon' ).wpColorPicker();
 } );

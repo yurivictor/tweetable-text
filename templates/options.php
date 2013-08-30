@@ -22,6 +22,12 @@
                 </td>
             </tr>
             <tr valign="top">
+                <th scope="row"><label name="<?php echo $key; ?>[color_icon]">Icon color:</label></th>
+                <td>
+                    <input class="color-icon" data-default-color="#0094c5" name="<?php echo $key; ?>[color_icon]" type="text" value="<?php echo $options['color_icon']; ?>">
+                </td>
+            </tr>
+            <tr valign="top">
                 <th scope="row">Twitter username (via @):</th>
                 <td><input type="text" name="<?php echo $key; ?>[username]" value="<?php echo $options['username']; ?>" /></td>
             </tr>

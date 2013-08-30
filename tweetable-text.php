@@ -24,7 +24,8 @@ class TweetableText {
 	protected $data = array(
 		'color_bg'    => 'whitesmoke',
 		'color_text'  => '#222',
-		'color_hover' => '#ed2e24',
+		'color_hover' => '#0094c5',
+		'color_icon'  => '#0094c5',
 		'username'    => '',
 		'bitly_user'  => '',
 		'bitly_key'   => '',
@@ -119,7 +120,7 @@ class TweetableText {
 	 */
 	public static function enqueue_scripts() {
 		// css
-		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
+		//wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
 	}
 
 	/**
@@ -223,8 +224,9 @@ class TweetableText {
 		$color_bg     = $options['color_bg'];
 		$color_text   = $options['color_text'];
 		$color_hover  = $options['color_hover'];
+		$color_icon   = $options['color_icon'];
 
-		return self::template( 'css', compact( 'color_bg', 'color_text', 'color_hover' ) );
+		return self::template( 'css', compact( 'color_bg', 'color_text', 'color_hover', 'color_icon' ) );
 	}
 
 	/**
@@ -234,10 +236,11 @@ class TweetableText {
 	public static function settings( $input ) {
 
 		$valid = array();
-		$valid['color_bg']    = sanitize_text_field( $input['color_bg'] );
+		$valid['color_bg']     = sanitize_text_field( $input['color_bg'] );
 		$valid['color_text']   = sanitize_text_field( $input['color_text'] );
 		$valid['color_hover']  = sanitize_text_field( $input['color_hover'] );
-		$valid['username']   = sanitize_text_field( $input['username'] );
+		$valid['color_icon']   = sanitize_text_field( $input['color_icon'] );
+		$valid['username']     = sanitize_text_field( $input['username'] );
 
 		// @todo check to make sure the bitly username and api key are valid
 		$valid['bitly_user']   = sanitize_text_field( $input['bitly_user'] );
