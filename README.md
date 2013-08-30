@@ -30,7 +30,6 @@ You can customize the colors, the link text,  the background of the link and the
 You can also add your Twitter handle so tweets show up via you.
 
 ## TODO ##
-* Check user capabilities for settings
 * Add javascripty live preview to settings page
 * Need better labeling on settings page
 * Improve bitly shortening for links (check for valid API credentials on options page save)
