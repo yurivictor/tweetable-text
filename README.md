@@ -1,5 +1,4 @@
-tweetable-text
-==============
+# tweetable-text #
 
 A WordPress plugin that lets you choose specific phrases or sentences for one-click tweeting.
 
@@ -22,3 +21,21 @@ Or add an @username to use as the "via" source of the tweet:
 <blockquote>Schardt says that <strong>&#91;tweetable via=&#34;aschweig&#34;&#93;</strong>finding creative journalists with an awareness of what technologies are available to them is half the battle.<strong>&#91;/tweetable&#93;</strong> The advancements themselves outpace the average newsroom's awareness and ability, but funding continues to be overwhelmingly aimed at furthering these platforms — while journalists struggle to keep up.</blockquote>
 
 As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> for the Twitter bird; if you don't want to use Font Awesome, just delete <code>&amp;thinsp;&lt;i class='icon-twitter' style='color: #ed2e24;'&gt;&lt;/i&gt;</code>. (You can replace it with an image call if you'd like.) Colors and other layout choices are editable in the CSS block at the bottom of the file.
+
+## Customize ##
+![alt tag](https://raw.github.com/yurivictor/tweetable-text/master/img/settings.png)
+
+You can customize the colors, the link text,  the background of the link and the hover state to match your web sites.
+
+You can also add your Twitter handle so tweets show up via you.
+
+## TODO ##
+* Check user capabilities for settings
+* Add javascripty live preview to settings page
+* Need better labeling on settings page
+* Add bitly shortening for links
+* Move admin-only settings into separate class
+* Need to add hack to stop no tables error when plugin is activated 
+* Add test for via because I think I messed it up
+* Add documentation for contributing, hacking and customization
+* Submit pull request to jbenton
