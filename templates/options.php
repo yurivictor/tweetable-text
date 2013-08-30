@@ -3,16 +3,23 @@
     <form method="post" action="options.php">
         <?php settings_fields( 'tweetable_options' ); ?>
         <table class="form-table">
-            <tr valign="top"><th scope="row">Backround color:</th>
-                <td><input type="text" name="<?php echo $key; ?>[color_bg]" value="<?php echo $options['color_bg']; ?>" /></td>
+            <tr valign="top">
+                <th scope="row"><label name="<?php echo $key; ?>[color_bg]">Background color:</label></th>
+                <td>
+                    <input class="color-bg" data-default-color="whitesmoke" name="<?php echo $key; ?>[color_bg]" type="text" value="<?php echo $options['color_bg']; ?>">
+                </td>
             </tr>
             <tr valign="top">
-                <th scope="row">Text color:</th>
-                <td><input type="text" name="<?php echo $key; ?>[color_text]" value="<?php echo $options['color_text']; ?>" /></td>
+                <th scope="row"><label name="<?php echo $key; ?>[color_text]">Text color:</label></th>
+                <td>
+                    <input class="color-text" data-default-color="#ed2e24" name="<?php echo $key; ?>[color_text]" type="text" value="<?php echo $options['color_text']; ?>">
+                </td>
             </tr>
             <tr valign="top">
-                <th scope="row">Text hover color:</th>
-                <td><input type="text" name="<?php echo $key; ?>[color_hover]" value="<?php echo $options['color_hover']; ?>" /></td>
+                <th scope="row"><label name="<?php echo $key; ?>[color_hover]">Hover color:</label></th>
+                <td>
+                    <input class="color-hover" data-default-color="#ed2e24" name="<?php echo $key; ?>[color_hover]" type="text" value="<?php echo $options['color_hover']; ?>">
+                </td>
             </tr>
             <tr valign="top">
                 <th scope="row">Twitter username:</th>
