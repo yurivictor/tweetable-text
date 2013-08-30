@@ -24,8 +24,8 @@ class TweetableText {
 		'color_text'  => '',
 		'color_hover' => '',
 		'username'    => '',
-		'bitly user'  => '',
-		'bitly pass'  => '',
+		'bitly_user'  => '',
+		'bitly_key'   => '',
 	);
 
 	/** Load Methods **********************************************************/
@@ -47,7 +47,7 @@ class TweetableText {
 	private static function add_actions() {
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_pages') );
-		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );		
+		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 	}
 	/**
@@ -131,7 +131,7 @@ class TweetableText {
 		// [tweetable] shortcode attributes
 		// @param string alt, an alternate tweet
 		// @param string hashtag, a hashtag to attach to the tweet
-		// @via string a twitter username to use as the via attribute (no @ sign)
+		// @param string via, a twitter username to use as the via attribute (no @ sign)
 		extract( shortcode_atts( array(
 			'alt'     	=> '',
 			'hashtag' 	=> '',
@@ -141,11 +141,17 @@ class TweetableText {
 		$permalink    = get_permalink( $post->ID );
 		$tweetcontent = ucfirst( strip_tags( $content ) );
 
-		if ( ! $via )   $via             = $options['username'];
-		if ( $alt )     $tweetcontent      = $alt;
+
+		if ( !$via && $options['username'] )
+			$via = $options['username'];
+
+		if ( $alt )     $tweetcontent  = $alt;
+
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
 
-		
+		if ( $options['bitly_user'] && $options['bitly_key'] )
+			$permalink = self::get_bitly_short_url( $permalink, $options['bitly_user'], $options['bitly_key'] );
+
 		ob_start();
 			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
 			$output = ob_get_contents();
@@ -167,7 +173,7 @@ class TweetableText {
 	}
 
 	/**
-	 * Create CSS for tweetable 
+	 * Create CSS for tweetable
 	 * @uses get_option
 	 * @return css
 	 */
@@ -193,9 +199,13 @@ class TweetableText {
 		$valid['color_hover']  = sanitize_text_field( $input['color_hover'] );
 		$valid['username']   = sanitize_text_field( $input['username'] );
 
+		// @todo check to make sure the bitly username and api key are valid
+		$valid['bitly_user']   = sanitize_text_field( $input['bitly_user'] );
+		$valid['bitly_key']    = sanitize_text_field( $input['bitly_key'] );
+
 		return $valid;
 	}
-	
+
 	/**
 	 * Load a template. MVC FTW!
 	 * @param string $template the template to load, without extension (assumes .php). File should be in templates/ folder
@@ -214,6 +224,36 @@ class TweetableText {
 	    include $path;
 
 	}
+
+	/**
+	 * Get a short bit.ly URL for a given long URL
+	 * @param string $url the long URL
+	 * @param string $user bit.ly username
+	 * @param string $key bit.ly API key
+	 * @param string $format format of the API response to return
+	 */
+	public static function get_bitly_short_url( $url, $user, $key, $format='txt' ) {
+		$connectURL = 'http://api.bit.ly/v3/shorten?login=' . $user . '&apiKey=' . $key . '&uri=' . urlencode( $url ) . '&format=' . $format;
+		return self::urlopen( $connectURL );
+	}
+
+	/**
+	 * Helper function to read the contents of the bit.ly API response
+	 */
+	public static function urlopen( $url ) {
+		if (function_exists('curl_init')) {
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			$result = curl_exec($ch);
+			curl_close($ch);
+			return $result;
+		} else {
+			return file_get_contents($url);
+		}
+	}
+
 }
 
 TweetableText::load();
