@@ -22,7 +22,7 @@
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row">Twitter username:</th>
+                <th scope="row">Twitter username (via @):</th>
                 <td><input type="text" name="<?php echo $key; ?>[username]" value="<?php echo $options['username']; ?>" /></td>
             </tr>            
         </table>
