@@ -24,6 +24,7 @@ As written, this requires <a href="http://fortawesome.github.io/Font-Awesome/">F
 
 ## Customize ##
 ![alt tag](https://raw.github.com/yurivictor/tweetable-text/master/img/settings.png)
+
 You can customize the colors, the link text,  the background of the link and the hover state to match your web sites.
 
 You can also add your Twitter handle so tweets show up via you.
