@@ -13,7 +13,7 @@ class TweetableText {
 
 	/** Constants *************************************************************/
 
-	const version    = '0.0.1';
+	const version    = '0.0.3';
 	const key        = 'tweetable';
 	const nonce_key  = 'post_formats_ui_nonce';
 
