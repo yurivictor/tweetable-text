@@ -33,9 +33,8 @@ You can also add your Twitter handle so tweets show up via you.
 * Check user capabilities for settings
 * Add javascripty live preview to settings page
 * Need better labeling on settings page
-* Add bitly shortening for links
+* Improve bitly shortening for links (check for valid API credentials on options page save)
 * Move admin-only settings into separate class
-* Need to add hack to stop no tables error when plugin is activated 
-* Add test for via because I think I messed it up
+* Need to add hack to stop no tables error when plugin is activated
 * Add documentation for contributing, hacking and customization
 * Submit pull request to jbenton
