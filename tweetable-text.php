@@ -44,9 +44,10 @@ class TweetableText {
 	 * @uses add_action()
 	 */
 	private static function add_actions() {
-		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_pages') );
+		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );		
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 	}
 
 	/**
@@ -82,6 +83,16 @@ class TweetableText {
 		// css
 		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
 		wp_enqueue_style( self::key, plugins_url( 'css/tweetable.css', __FILE__ ), null, self::version );
+	}
+
+	/**
+	 * Enqueue the necessary CSS and JS
+	 * @uses wp_enqueue_style()
+	 * @uses wp_enqueue_script()
+	 */
+	public static function admin_enqueue_scripts( $hook_suffix ) {
+    	wp_enqueue_style( 'wp-color-picker' );
+    	wp_enqueue_script( self::key . '-admin', plugins_url( 'js/tweetable-admin.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
 
 	/**
