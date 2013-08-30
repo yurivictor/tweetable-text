@@ -199,7 +199,6 @@ class TweetableText {
     	$options = get_option( $key );
 
 		return self::template( 'options', compact( 'key', 'options' ) );
-
 	}
 
 	/**
