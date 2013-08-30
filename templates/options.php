@@ -6,19 +6,19 @@
             <tr valign="top">
                 <th scope="row"><label name="<?php echo $key; ?>[color_bg]">Background color:</label></th>
                 <td>
-                    <input class="color-bg" data-default-color="whitesmoke" name="<?php echo $key; ?>[color_bg]" type="text" value="<?php echo $options['color_bg']; ?>">
+                    <input class="color-bg" data-default-color="#efefef" name="<?php echo $key; ?>[color_bg]" type="text" value="<?php echo $options['color_bg']; ?>">
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row"><label name="<?php echo $key; ?>[color_text]">Link text color:</label></th>
                 <td>
-                    <input class="color-text" data-default-color="#ed2e24" name="<?php echo $key; ?>[color_text]" type="text" value="<?php echo $options['color_text']; ?>">
+                    <input class="color-text" data-default-color="#222222" name="<?php echo $key; ?>[color_text]" type="text" value="<?php echo $options['color_text']; ?>">
                 </td>
             </tr>
             <tr valign="top">
                 <th scope="row"><label name="<?php echo $key; ?>[color_hover]">Hover color:</label></th>
                 <td>
-                    <input class="color-hover" data-default-color="#ed2e24" name="<?php echo $key; ?>[color_hover]" type="text" value="<?php echo $options['color_hover']; ?>">
+                    <input class="color-hover" data-default-color="#0094c5" name="<?php echo $key; ?>[color_hover]" type="text" value="<?php echo $options['color_hover']; ?>">
                 </td>
             </tr>
             <tr valign="top">
