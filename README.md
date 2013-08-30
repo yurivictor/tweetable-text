@@ -38,4 +38,5 @@ You can also add your Twitter handle so tweets show up via you.
 * Tweetable settings
 
 ## TODO ##
+* Update version to 0.1.0
 * Submit pull request to jbenton
