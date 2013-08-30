@@ -29,9 +29,13 @@ You can customize the colors, the link text,  the background of the link and the
 
 You can also add your Twitter handle so tweets show up via you.
 
-## TODO ##
-* Add javascripty live preview to settings page
-* Need better labeling on settings page
+## BUGS ##
 * Improve bitly shortening for links (check for valid API credentials on options page save)
-* Add documentation for contributing, hacking and customization
+
+## IMPROVEMENTS ##
+* Documentation
+* Tweetable button
+* Tweetable settings
+
+## TODO ##
 * Submit pull request to jbenton
