@@ -128,8 +128,8 @@ class TweetableText {
 	 * @uses wp_enqueue_script()
 	 */
 	public static function admin_enqueue_scripts( $hook_suffix ) {
-    	wp_enqueue_style( 'wp-color-picker' );
-    	wp_enqueue_script( self::key . '-admin', plugins_url( 'js/tweetable-admin.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( self::key . '-admin', plugins_url( 'js/tweetable-admin.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
 
 	/**
