@@ -67,7 +67,6 @@ class TweetableText {
 		self::add_actions();
 		self::add_filters();
 		self::add_shortcodes();
-		self::remove_filters();
 	}
 
 	/**
@@ -86,6 +85,7 @@ class TweetableText {
 	 */
 	private static function add_filters() {
 		add_filter( 'wp_head', array( __CLASS__, 'create_css' ) );
+		add_filter( 'no_texturize_shortcodes', array( __CLASS__, 'exempt_from_wptexturize' ) );
 	}
 
 	/**
@@ -94,15 +94,6 @@ class TweetableText {
 	 */
 	private static function add_shortcodes() {
 		add_shortcode( 'tweetable', array( __CLASS__, 'makeTweetable' ) );
-	}
-
-	/**
-	 * Remove filters from WordPress API
-	 * @uses remove_filter()
-	 */
-	private static function remove_filters() {
-		// Stops WordPress from converting your quote symbols into smartquotes, since they are not compatible with the Twitter Share button. (The urlencoding of single quotes / apostrophes breaks in the tweet.)
-		remove_filter( 'the_content', 'wptexturize' );
 	}
 
 	/**
@@ -214,6 +205,22 @@ class TweetableText {
 		$color_hover  = $options['color_hover'];
 
 		return self::template( 'css', compact( 'color_bg', 'color_text', 'color_hover' ) );
+	}
+
+	/**
+	 * Stop WordPress from converting Tweetable quotes into smartquotes
+	 *
+	 * The smartquotes are incompatible with the Twitter Share button.
+	 * The urlencoding of single quotes / apostrophes breaks in the
+	 * tweet.
+	 *
+	 * @link http://codex.wordpress.org/Plugin_API/Filter_Reference/no_texturize_shortcodes
+	 * @param array $shortcodes The existing exempted shortcodes
+	 * @return array The updated exempted shortcodes
+	 */
+	public static function exempt_from_wptexturize( $shortcodes ) {
+	  $shortcodes[] = 'tweetable';
+	  return $shortcodes;
 	}
 
 	/**
