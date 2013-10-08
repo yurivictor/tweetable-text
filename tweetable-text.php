@@ -177,8 +177,14 @@ class TweetableText {
 		if ( $options['bitly_user'] && $options['bitly_key'] )
 			$permalink = self::get_bitly_short_url( $permalink, $options['bitly_user'], $options['bitly_key'] );
 
+		$href = sprintf( 'https://twitter.com/intent/tweet?original_referer=%1$s&source=tweetbutton&text=%2$s&url=%1$s%3$s',
+			$permalink,
+			rawurlencode( $tweetcontent ),
+			$via ? '&via=' . $via : ''
+		);
+
 		ob_start();
-			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
+			self::template( 'tweet', compact( 'content', 'href' ) );
 			$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
