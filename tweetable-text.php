@@ -110,7 +110,9 @@ class TweetableText {
 	 */
 	public static function enqueue_scripts() {
 		// css
-		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
+		$font_awesome_src = plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ );
+		$font_awesome_src = apply_filters( 'tt_font_awesome_src', $font_awesome_src );
+		wp_enqueue_style( 'tt-font-awesome', $font_awesome_src, null, '3.2.1' );
 	}
 
 	/**
