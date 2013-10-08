@@ -147,8 +147,10 @@ class TweetableText {
 
 		global $post;
 
-		// bail if not a post
-		if ( ! get_post_type( $post ) == 'post' )
+		// bail if not in the allowed post types
+		$allowed_post_types = array( 'post' );
+		$allowed_post_types = apply_filters( 'tweetable_allowed_post_types', $allowed_post_types );
+		if ( ! in_array( get_post_type( $post ), $allowed_post_types ) )
 			return $content;
 
 		// [tweetable] shortcode attributes
