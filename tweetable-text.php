@@ -141,7 +141,7 @@ class TweetableText {
 	 * @param array $atts, [tweetable] shortcode attributes
 	 * @param string $content, the content wrapped in [tweetable] shortcode
 	 * @uses shortcode_atts()
-	 * @return if not post
+	 * @return if not an allowed post type
 	 */
 	public static function makeTweetable( $atts, $content = '' ) {
 
