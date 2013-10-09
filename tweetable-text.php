@@ -253,21 +253,26 @@ class TweetableText {
 
 	/**
 	 * Load a template. MVC FTW!
-	 * @param string $template the template to load, without extension (assumes .php). File should be in templates/ folder
+	 *
+	 * Templates in a parent or child theme should be in the tweetable/
+	 * folder; otherwise, templates should be in templates/ folder
+	 *
+	 * @param string $template the template to load, without extension (assumes .php).
 	 * @param args array of args to be run through extract and passed to template
 	 */
 	public static function template( $template, $args = array() ) {
 
-	    extract( $args );
+		extract( $args );
 
-	    if ( ! $template )
-	        return false;
+		if ( ! $template )
+			return false;
 
-	    $path = dirname( __FILE__ ) . "/templates/{$template}.php";
-	    $path = apply_filters( 'liveblog', $path, $template );
+		$path = locate_template( "tweetable/{$template}.php", false, false );
+		if ( ! $path )
+			$path = dirname( __FILE__ ) . "/templates/{$template}.php";
+		$path = apply_filters( 'liveblog', $path, $template );
 
-	    include $path;
-
+		include( $path );
 	}
 
 	/**
