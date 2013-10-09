@@ -76,7 +76,7 @@ class TweetableText {
 	private static function add_actions() {
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_pages') );
-		add_action( 'wp_head', array( __CLASS__, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_enqueue_scripts' ) );
 	}
 	/**
@@ -110,7 +110,9 @@ class TweetableText {
 	 */
 	public static function enqueue_scripts() {
 		// css
-		wp_enqueue_style( 'font-awesome', plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ ), null, '3.2.1' );
+		$font_awesome_src = plugins_url( 'css/lib/font-awesome/css/font-awesome.min.css', __FILE__ );
+		$font_awesome_src = apply_filters( 'tweetable_font_awesome_src', $font_awesome_src );
+		wp_enqueue_style( 'tweetable-font-awesome', $font_awesome_src, null, '3.2.1' );
 	}
 
 	/**
@@ -139,14 +141,16 @@ class TweetableText {
 	 * @param array $atts, [tweetable] shortcode attributes
 	 * @param string $content, the content wrapped in [tweetable] shortcode
 	 * @uses shortcode_atts()
-	 * @return if not post
+	 * @return if not an allowed post type
 	 */
 	public static function makeTweetable( $atts, $content = '' ) {
 
 		global $post;
 
-		// bail if not a post
-		if ( ! get_post_type( $post ) == 'post' )
+		// bail if not in the allowed post types
+		$allowed_post_types = array( 'post' );
+		$allowed_post_types = apply_filters( 'tweetable_allowed_post_types', $allowed_post_types );
+		if ( ! in_array( get_post_type( $post ), $allowed_post_types ) )
 			return $content;
 
 		// [tweetable] shortcode attributes
@@ -170,11 +174,19 @@ class TweetableText {
 
 		if ( $hashtag ) $tweetcontent .= ' ' . $hashtag;
 
+		if ( $via )			$via = '&via=' . $via;
+
 		if ( $options['bitly_user'] && $options['bitly_key'] )
 			$permalink = self::get_bitly_short_url( $permalink, $options['bitly_user'], $options['bitly_key'] );
 
+		$href = sprintf( 'https://twitter.com/intent/tweet?original_referer=%1$s&source=tweetbutton&text=%2$s&url=%1$s%3$s',
+			$permalink,
+			rawurlencode( $tweetcontent ),
+			$via
+		);
+
 		ob_start();
-			self::template( 'tweet', compact( 'content', 'tweetcontent', 'permalink', 'via' ) );
+			self::template( 'tweet', compact( 'content', 'href' ) );
 			$output = ob_get_contents();
 		ob_end_clean();
 		return $output;
@@ -243,21 +255,26 @@ class TweetableText {
 
 	/**
 	 * Load a template. MVC FTW!
-	 * @param string $template the template to load, without extension (assumes .php). File should be in templates/ folder
+	 *
+	 * Templates in a parent or child theme should be in the tweetable/
+	 * folder; otherwise, templates should be in templates/ folder
+	 *
+	 * @param string $template the template to load, without extension (assumes .php).
 	 * @param args array of args to be run through extract and passed to template
 	 */
 	public static function template( $template, $args = array() ) {
 
-	    extract( $args );
+		extract( $args );
 
-	    if ( ! $template )
-	        return false;
+		if ( ! $template )
+			return false;
 
-	    $path = dirname( __FILE__ ) . "/templates/{$template}.php";
-	    $path = apply_filters( 'liveblog', $path, $template );
+		$path = locate_template( "tweetable/{$template}.php", false, false );
+		if ( ! $path )
+			$path = dirname( __FILE__ ) . "/templates/{$template}.php";
+		$path = apply_filters( 'liveblog', $path, $template );
 
-	    include $path;
-
+		include( $path );
 	}
 
 	/**
