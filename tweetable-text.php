@@ -2,8 +2,8 @@
 /*
 Plugin Name: Tweetable Text
 Original Plugin URI: http://wordpress.org/extend/plugins/tweetable-text/
-Description: Make your posts more shareable. Add a Tweet and Buffer button to key sentences right inside each blog post with a simple [tweetable] tag.
-Version: 1.1
+Description: Make your posts more shareable. Add a Tweet and Buffer button to key sentences right inside each blog post with a simple [tweetable] shortcode.
+Version: 0.1.0
 Author: Salim Virani (original), updated by Joshua Benton of Nieman Lab, Yuri Victor, Adam Schweigert
 */
 
@@ -15,7 +15,7 @@ class TweetableText {
 
 	/** Constants *************************************************************/
 
-	const version    = '0.0.3';
+	const version    = '0.1.0';
 	const key        = 'tweetable';
 	const nonce_key  = 'post_formats_ui_nonce';
 
